@@ -103,6 +103,29 @@ Content type -> application/json
 ```
 step3. save the configuration
 
+### configure EC2 instance IAM role to push docker images to ECR
+
+aws quote:
+```
+We designed IAM roles so that your applications can securely make API requests from your instances, without requiring you to manage the security credentials that the applications use. Instead of creating and distributing your AWS credentials, you can delegate permission to make API requests using IAM roles as follows:
+```
+follow the instructions here : https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html
+
+after creating the IAM Role we can attach the Role to the already created EC2 instance
+
+steps:  go to main ec2 console -> select running instance -> click Actions from top right bar -> click security -> click modify IAM role -> attach the IAM role
+
+### steup AWS EC2 instance for ECR push
+
+```bash
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+sudo apt install unzip
+unzip awscliv2.zip
+sudo ./aws/install
+aws ecr get-login-password --region us-east-1 | sudo docker login --username AWS --password-stdin 630210676530.dkr.ecr.us-east-1.amazonaws.com
+sudo docker tag hello-world:latest 630210676530.dkr.ecr.us-east-1.amazonaws.com/ai-cicd
+sudo docker push 630210676530.dkr.ecr.us-east-1.amazonaws.com/ai-cicd
+```
 
 
 
