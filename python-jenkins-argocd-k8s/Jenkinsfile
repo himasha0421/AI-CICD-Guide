@@ -3,7 +3,6 @@ pipeline {
     agent {
         docker {
             image 'ubuntu:latest'
-            agrs  '-u root:sudo'
          }
     }
     
