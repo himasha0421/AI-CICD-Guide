@@ -3,7 +3,7 @@ pipeline {
     agent {
         docker {
             image 'ubuntu:latest'
-            args  '-u root:sudo'
+            args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
          }
     }
     
@@ -14,6 +14,7 @@ pipeline {
         stage('Setup-Docker'){
            steps {
                 script{
+                    // docker image docker setup
                     sh '''
                         apt-get update -y
                         apt-get install ca-certificates curl gnupg -y
@@ -36,12 +37,27 @@ pipeline {
         stage('Setup-AWS') {
             steps {
                 script{
+                    // install aws cli to interact with aws resources
                     sh '''
                         curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
                         apt install unzip -y
                         unzip -o awscliv2.zip
                         ./aws/install 
                         aws --version
+                        aws ecr get-login-password --region us-east-1 | sudo docker login --username AWS --password-stdin 630210676530.dkr.ecr.us-east-1.amazonaws.com
+                    '''
+                }
+            }
+        }
+
+        stage('Docker-Build'){
+            steps{
+                script{
+                    // build the django backend and push to aws ECR
+                    sh '''
+                        echo 'Docker Build'
+                        docker build -t 630210676530.dkr.ecr.us-east-1.amazonaws.com/ai-cicd:${BUILD_NUMBER}
+                        docker push 630210676530.dkr.ecr.us-east-1.amazonaws.com/ai-cicd:${BUILD_NUMBER}
                     '''
                 }
             }
