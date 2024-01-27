@@ -93,8 +93,15 @@ step8. Once you are done with the above steps, it is better to restart Jenkins.
 create a webhook
 
 
+step1. go to the github project -> settings -> Webhooks
 
+step2. click add webhook
 
+```
+Payload URL -> http://<Jenkins server public ip>:<jenkins port>/github-webhook/
+Content type -> application/json
+```
+step3. save the configuration
 
 
 
