@@ -125,6 +125,7 @@ sudo ./aws/install
 aws ecr get-login-password --region us-east-1 | sudo docker login --username AWS --password-stdin 630210676530.dkr.ecr.us-east-1.amazonaws.com
 sudo docker tag hello-world:latest 630210676530.dkr.ecr.us-east-1.amazonaws.com/ai-cicd
 sudo docker push 630210676530.dkr.ecr.us-east-1.amazonaws.com/ai-cicd
+
 ```
 
 
