@@ -1,6 +1,8 @@
 pipeline {
     
-    agent any
+    agent {
+        docker {image 'alpine:latest' }
+    }
     
     environment {
         IMAGE_TAG = "${BUILD_NUMBER}"
