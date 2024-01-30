@@ -62,6 +62,7 @@ pipeline {
                         docker push 630210676530.dkr.ecr.us-east-1.amazonaws.com/ai-cicd:v${BUILD_NUMBER}
                         cd ..
                         echo 'Docker Build Complete ...'
+                        
                     '''
                 }
             }
