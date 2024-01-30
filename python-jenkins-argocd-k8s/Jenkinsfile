@@ -67,5 +67,34 @@ pipeline {
             }
         }
 
+        stage('Sonar-Scan-Setup'){
+            steps {
+                script{
+                    sh '''
+                        wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+                        unzip sonar-scanner-cli-5.0.1.3006-linux.zip
+                        export PATH=$PATH:/home/ubuntu/AI-CICD/sonar-scanner-5.0.1.3006-linux/bin/
+                    '''
+                }
+            }
+        }
+
+        stage('Sonar-Scan'){
+            environment {
+                SONAR_URL = "http://34.201.116.83:9000"
+            }
+            steps{
+                withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]){
+                    sh '''
+                        sonar-scanner \
+                        -Dsonar.projectKey=jenkins-cicd \
+                        -Dsonar.sources=. \
+                        -Dsonar.host.url=${SONAR_URL} \
+                        -Dsonar.login=$SONAR_AUTH_TOKEN
+                    '''
+                }
+            }
+        }
+
     }
 }

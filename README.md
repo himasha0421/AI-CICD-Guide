@@ -142,4 +142,24 @@ cd sonarqube-9.4.0.54424/bin/linux-x86-64/
 ./sonar.sh start
 ```
 
+### setup sonar scaner cli
+
+```bash
+
+wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+unzip sonar-scanner-cli-5.0.1.3006-linux.zip
+export PATH=$PATH:/home/ubuntu/sonar-scanner-5.0.1.3006-linux/bin/
+cd AI-CICD-Guide/
+```
+
+* run sonar scannaer
+
+```bash
+
+sonar-scanner \
+  -Dsonar.projectKey=jenkins-cicd \
+  -Dsonar.sources=. \
+  -Dsonar.host.url=http://34.192.92.49:9000 \
+  -Dsonar.login=13a3bd852307a5651d331d749e0cbe7890483203
+```
 
