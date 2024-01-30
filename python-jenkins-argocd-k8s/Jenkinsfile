@@ -58,8 +58,8 @@ pipeline {
                         echo 'Docker Build'
                         ls -a
                         cd python-jenkins-argocd-k8s
-                        docker build -t 630210676530.dkr.ecr.us-east-1.amazonaws.com/ai-cicd:${BUILD_NUMBER} .
-                        docker push 630210676530.dkr.ecr.us-east-1.amazonaws.com/ai-cicd:${BUILD_NUMBER}
+                        docker build -t 630210676530.dkr.ecr.us-east-1.amazonaws.com/ai-cicd:v${BUILD_NUMBER} .
+                        docker push 630210676530.dkr.ecr.us-east-1.amazonaws.com/ai-cicd:v${BUILD_NUMBER}
                         cd ..
                         echo 'Docker Build Complete ...'
                     '''
