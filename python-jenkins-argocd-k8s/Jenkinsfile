@@ -110,9 +110,8 @@ pipeline {
         stage('Checkout-Deployment'){
            steps {
                 sh 'cd ..'
-                git credentialsId: 'github', 
-                url: 'https://github.com/himasha0421/AI-CICD-Guide',
-                branch: 'prod'
+                // clone prod branch
+                sh: 'git clone -b prod https://github.com/himasha0421/AI-CICD-Guide.git',
            }
         }
 
