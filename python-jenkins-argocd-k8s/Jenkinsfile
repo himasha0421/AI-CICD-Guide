@@ -86,7 +86,7 @@ pipeline {
                 withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]){
                     sh '''
                         cd sonar-scanner-5.0.1.3006-linux/bin/
-                        sonar-scanner \
+                        ./sonar-scanner \
                         -Dsonar.projectKey=jenkins-cicd \
                         -Dsonar.sources=. \
                         -Dsonar.host.url=${SONAR_URL} \
