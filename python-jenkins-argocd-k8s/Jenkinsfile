@@ -125,6 +125,8 @@ pipeline {
             steps{
                 withCredentials([string(credentialsId: 'github' , variable: 'GITHUB_TOKEN')]){
                     sh '''
+                        cd ..
+                        ls -a
                         cd AI-CICD-Guide
                         echo "Before Deployment Update ..."
                         cat deploy/deploy.yaml
