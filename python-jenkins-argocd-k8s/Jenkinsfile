@@ -110,7 +110,7 @@ pipeline {
                     sh '''
                         echo "Before Deployment Update ..."
                         cat python-jenkins-argocd-k8s/deploy/deploy.yaml
-                        sed -i "s/ai-cicd:v*/ai-cicd:v${BUILD_NUMBER}/g" python-jenkins-argocd-k8s/deploy/deploy.yaml
+                        sed -i "s/ai-cicd:v.*/ai-cicd:v${BUILD_NUMBER}/g" python-jenkins-argocd-k8s/deploy/deploy.yaml
                         echo "After Deployment Update ..."
                         cat python-jenkins-argocd-k8s/deploy/deploy.yaml
                         git config --global safe.directory '*'
@@ -119,7 +119,6 @@ pipeline {
                         git config --global user.name "himasha0421"
                         git commit -m "Update deployment image to version ${BUILD_NUMBER}"
                         git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
-                        
                     '''
                 }
             }
