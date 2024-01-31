@@ -46,12 +46,10 @@ pipeline {
                         unzip -o awscliv2.zip
                         ./aws/install 
                         aws --version
-
-                        // private ecr login
-                        //aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 630210676530.dkr.ecr.us-east-1.amazonaws.com
-                        
                         aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/m3j8h2a6
                     '''
+                    // private ecr login
+                    //aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 630210676530.dkr.ecr.us-east-1.amazonaws.com
                 }
             }
         }
@@ -65,15 +63,14 @@ pipeline {
                         ls -a
                         cd python-jenkins-argocd-k8s
 
-                        // private ecr
-                        //docker build -t 630210676530.dkr.ecr.us-east-1.amazonaws.com/ai-cicd:v${BUILD_NUMBER} .
-                        //docker push 630210676530.dkr.ecr.us-east-1.amazonaws.com/ai-cicd:v${BUILD_NUMBER}
-
                         docker build -t public.ecr.aws/m3j8h2a6/django-bot:v${BUILD_NUMBER}
                         docker push public.ecr.aws/m3j8h2a6/django-bot:v${BUILD_NUMBER}
 
                         echo 'Docker Build Complete ...'
                     '''
+                    // private ecr
+                    //docker build -t 630210676530.dkr.ecr.us-east-1.amazonaws.com/ai-cicd:v${BUILD_NUMBER} .
+                    //docker push 630210676530.dkr.ecr.us-east-1.amazonaws.com/ai-cicd:v${BUILD_NUMBER}
                 }
             }
         }
