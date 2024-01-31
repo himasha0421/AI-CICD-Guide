@@ -111,7 +111,7 @@ pipeline {
            steps {
                 sh 'cd ..'
                 // clone prod branch
-                sh: 'git clone -b prod https://github.com/himasha0421/AI-CICD-Guide.git',
+                sh 'git clone -b prod https://github.com/himasha0421/AI-CICD-Guide.git',
            }
         }
 
