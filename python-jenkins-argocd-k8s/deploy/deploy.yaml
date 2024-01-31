@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: todo-app:v9
+  name: todo-app:v10
   labels:
     app: nginx
 spec:
@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: todo
-          image: abhishekf5/todo-app:v9
+          image: abhishekf5/todo-app:v10
           ports:
             - containerPort: 8000
