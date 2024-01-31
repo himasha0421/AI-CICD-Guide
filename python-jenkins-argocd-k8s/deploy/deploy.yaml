@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: todo
-          image: 630210676530.dkr.ecr.us-east-1.amazonaws.com/ai-cicd:v11
+          image: 630210676530.dkr.ecr.us-east-1.amazonaws.com/ai-cicd:v12
           ports:
             - containerPort: 8000
