@@ -109,9 +109,10 @@ pipeline {
 
         stage('Checkout-Deployment'){
            steps {
-                sh 'cd ..'
-                // clone prod branch
-                sh 'git clone -b prod https://github.com/himasha0421/AI-CICD-Guide.git'
+                sh '''
+                    cd ../
+                    git clone -b prod https://github.com/himasha0421/AI-CICD-Guide.git
+                '''
            }
         }
 
