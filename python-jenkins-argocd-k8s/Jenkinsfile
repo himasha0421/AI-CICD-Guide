@@ -80,15 +80,16 @@ pipeline {
 
         stage('Sonar-Scan'){
             environment {
-                SONAR_URL = "http://34.201.116.83:9000"
+                SONAR_URL = "http://34.192.92.49:9000/"
             }
             steps{
                 withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]){
                     sh '''
                         cd sonar-scanner-5.0.1.3006-linux/bin/
+                        pwd
                         ./sonar-scanner \
                         -Dsonar.projectKey=jenkins-cicd \
-                        -Dsonar.sources=. \
+                        -Dsonar.sources=../../. \
                         -Dsonar.host.url=${SONAR_URL} \
                         -Dsonar.login=$SONAR_AUTH_TOKEN
 
