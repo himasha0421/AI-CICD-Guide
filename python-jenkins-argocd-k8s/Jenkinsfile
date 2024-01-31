@@ -108,8 +108,8 @@ pipeline {
             steps{
                 withCredentials([string(credentialsId: 'github' , variable: 'GITHUB_TOKEN')]){
                     sh '''
-                        ls -a
-                        pwd
+                        rm .git
+                        git init
                         git config user.email "himasha0421@gmail.com"
                         git config user.name "himasha0421"
                         echo "Before Deployment Update ..."
