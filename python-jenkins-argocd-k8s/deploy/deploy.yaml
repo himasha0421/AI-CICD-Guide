@@ -16,10 +16,6 @@ spec:
     spec:
       containers:
         - name: todo
-<<<<<<< HEAD
-          image: abhishekf5/todo-app:v10
-=======
           image: 630210676530.dkr.ecr.us-east-1.amazonaws.com/ai-cicd:v10
->>>>>>> 778544b (update docker repo)
           ports:
             - containerPort: 8000
