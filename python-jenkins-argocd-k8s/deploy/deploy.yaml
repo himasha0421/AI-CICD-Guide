@@ -15,7 +15,7 @@ spec:
         app: nginx
     spec:
       containers:
-      - name: todo
-        image: abhishekf5/todo-app:v1
-        ports:
-        - containerPort: 8000
+        - name: todo
+          image: abhishekf5/todo-app:v1
+          ports:
+            - containerPort: 8000
