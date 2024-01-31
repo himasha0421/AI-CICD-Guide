@@ -1,9 +1,10 @@
-### steup minikube cluster
+# Deployment (CD Pipeline)
 
-step1. install docker
+## setup minikube cluster
+
+* step 1. install docker
 
 ```bash
-
 # Add Docker's official GPG key:
 sudo apt-get update
 sudo apt-get install ca-certificates curl
@@ -20,23 +21,20 @@ sudo apt-get update
 ```
 
 ```bash
-
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin \ docker-compose-plugin
 ```
 
-step 2. install minikube
+* step 2. install minikube
 
 ```bash
-
 curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
 sudo install minikube-linux-amd64 /usr/local/bin/minikube
-
 ```
 
-step 3. setup kubectl
+
+* step 3. setup kubectl
 
 ```bash
-
 sudo apt-get update
 # apt-transport-https may be a dummy package; if so, you can skip that package
 sudo apt-get install -y apt-transport-https ca-certificates curl
@@ -50,43 +48,41 @@ sudo apt-get update
 sudo apt-get install -y kubectl
 ```
 
-step 4. docker user group add
+* step 4. docker user group add
+
+this will remove the accedd denied issue to the docker deamon
 
 ```bash
-
 sudo usermod -aG docker $USER
 newgrp docker
 ```
 
-step 5. start the minikube cluster
+* step 5. start the minikube cluster
 
 ```bash
-
 minikube start --memory=2048
 ```
 
 
-step 6. setup ArgoCD using kubenetes operators
+## Setup ArgoCD using kubenetes operators
 
+* step 1. install OLM for the cluster , then install argocd operator
 
 ```bash
-
 curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.26.0/install.sh | bash -s v0.26.0
 kubectl create -f https://operatorhub.io/install/argocd-operator.yaml
 kubectl get csv -n operators
 ```
 
-step 7. check minikube status
+* step 2. check minikube status
 
 ```bash
-
 minikube status
 ```
 
-step 8. define basic argocd operator config file
+## Define basic argocd operator config file for the deployment
 
 ```yml
-
 apiVersion: argoproj.io/v1alpha1
 kind: ArgoCD
 metadata:
@@ -96,14 +92,13 @@ metadata:
 spec: {}
 ```
 
-apply the configuratoion
+## Apply the configuration
 
 ```bash
-
 kubectl apply -f <argocd-operator-yaml-filepath>
 ```
 
-check cluster pods status , wait till pods up and run
+## Check cluster pods status , wait till pods up and run
 
 ```bash
 kubectl get pods
@@ -117,15 +112,14 @@ example-argocd-repo-server-6f74889cdf-xzhw5   1/1     Running   0          74m
 example-argocd-server-58799f4c44-6w6kq        1/1     Running   0          74m
 ```
 
-if all the pods up and run then we can update the argocd-server service to the type loadbalancer with port 8080, then we have to
-do port forwarding to access the resource from public internet (EC2 cluster configuration)
+If all the pods are up and running, we can update the argocd-server service to the type LoadBalancer with port 8080. After that, we have to set up port forwarding to access the resource from the public internet (EC2 cluster configuration).
 
 
 ```bash
-
 kubectl edit svc example-argocd-server
 ```
 
+edited yaml file: 
 ```yaml
 ports:
   - name: http
@@ -144,9 +138,7 @@ ports:
   type: LoadBalancer  #edited here
 ```
 
-after applying check the kubectl svc status to verify the changes
-
-* apply port forwarding to enable the public access , first check the minikube service list and identify the target port
+after applying, check the kubectl svc status to verify the changes.
 
 ```bash
 minikube service list
@@ -172,16 +164,17 @@ output -->
 
 ```
 
+* Apply port forwarding to enable public access. First, check the Minikube service list and identify the target port.
+
 ```bash
 kubectl port-forward --address 0.0.0.0 service/example-argocd-server 32617:8080
 ```
 
-now we can access the service using the http://<server public ip>:32617
+> now we can access the service using the ```http://<server public ip>:32617```
 
-step 8. get the argocd access password
+## Get the argocd access password
 
 ```bash
-
 # check kubectl secret stores
 kubectl get secrets
 
@@ -197,7 +190,7 @@ echo b1JpZnJhdmpFa1BRTlVGR0Q2WlRKWG44MjRLc1ZBMXE= | base64 -d
 original_pw: oRifravjEkPQNUFGD6ZTJXn824KsVA1q
 ```
 
-step 10. create aws exr secret inside kubernets cluster
+## Create aws exr secret inside kubernets cluster
 
 ```bash
 
@@ -208,11 +201,12 @@ kubectl create secret docker-registry regcred \
   --namespace=default
 ```
 
-step 11. after service deployment 
+## After a successful continuous delivery (CD) workflow, the cluster pod configuration will look like this.
 
 ```bash
-
 kubectl get pods
+
+output ->
 
 NAME                                          READY   STATUS    RESTARTS   AGE
 example-argocd-application-controller-0       1/1     Running   0          6m44s
@@ -226,8 +220,9 @@ todo-app-5bc5577fbb-lhd4g                     1/1     Running   0          71s
 ```
 
 ```bash
-
 kubectl get svc
+
+otuput ->
 
 NAME                            TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)                      AGE
 example-argocd-metrics          ClusterIP      10.108.67.47    <none>        8082/TCP                     21m
@@ -239,7 +234,7 @@ kubernetes                      ClusterIP      10.96.0.1       <none>        443
 todo-service                    NodePort       10.110.100.91   <none>        8080:31000/TCP               15m
 ```
 
-step 12. expose custom python application to outside world
+## Expose custom python application (todo-service) to outside world from EC2 instance
 
 ```bash
 kubectl port-forward --address 0.0.0.0 service/todo-service 31000:8080
