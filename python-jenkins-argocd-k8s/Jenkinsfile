@@ -3,7 +3,7 @@ pipeline {
     agent {
         docker {
             image 'ubuntu:latest'
-            args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
+            args '--user root' // mount Docker socket to access the host's Docker daemon
          }
     }
     
@@ -57,6 +57,7 @@ pipeline {
                     // build the django backend and push to aws ECR
                     sh '''
                         echo 'Docker Build'
+                        cd python-jenkins-argocd-k8s
                         ls -a
                         docker build -t 630210676530.dkr.ecr.us-east-1.amazonaws.com/ai-cicd:v${BUILD_NUMBER} .
                         docker push 630210676530.dkr.ecr.us-east-1.amazonaws.com/ai-cicd:v${BUILD_NUMBER}
