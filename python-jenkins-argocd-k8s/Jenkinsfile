@@ -88,6 +88,7 @@ pipeline {
                     sh '''
                         pwd
                         ls -a
+                        cd python-jenkins-argocd-k8s
                         export PATH=$PATH:/var/lib/jenkins/workspace/sonar-scanner-5.0.1.3006-linux/bin/
                         sonar-scanner \
                         -Dsonar.projectKey=jenkins-cicd \
