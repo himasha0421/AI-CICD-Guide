@@ -39,6 +39,7 @@ pipeline {
                 script{
                     // install aws cli to interact with aws resources
                     sh '''
+                        cd ..
                         curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
                         apt install unzip -y
                         unzip -o awscliv2.zip
@@ -57,7 +58,7 @@ pipeline {
                     sh '''
                         echo 'Docker Build'
                         ls -a
-                        cd python-jenkins-argocd-k8s
+                        cd python-cicd-pipeline/python-jenkins-argocd-k8s
                         docker build -t 630210676530.dkr.ecr.us-east-1.amazonaws.com/ai-cicd:v${BUILD_NUMBER} .
                         docker push 630210676530.dkr.ecr.us-east-1.amazonaws.com/ai-cicd:v${BUILD_NUMBER}
                         cd ..
@@ -71,6 +72,7 @@ pipeline {
             steps {
                 script{
                     sh '''
+                        cd ..
                         wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
                         unzip -o sonar-scanner-cli-5.0.1.3006-linux.zip
                     '''
@@ -85,11 +87,13 @@ pipeline {
             steps{
                 withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]){
                     sh '''
-                        cd sonar-scanner-5.0.1.3006-linux/bin/
+                        cd python-cicd-pipeline
                         pwd
-                        ./sonar-scanner \
+                        ls -a
+                        export PATH=$PATH:/var/lib/jenkins/workspace/sonar-scanner-5.0.1.3006-linux/bin/
+                        sonar-scanner \
                         -Dsonar.projectKey=jenkins-cicd \
-                        -Dsonar.sources=../../. \
+                        -Dsonar.sources=. \
                         -Dsonar.host.url=${SONAR_URL} \
                         -Dsonar.login=$SONAR_AUTH_TOKEN
 
