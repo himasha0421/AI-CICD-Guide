@@ -110,8 +110,8 @@ pipeline {
                     sh '''
                         rm -rf .git
                         git init
-                        git config user.email "himasha0421@gmail.com"
-                        git config user.name "himasha0421"
+                        git config --global user.email "himasha0421@gmail.com"
+                        git config --global user.name "himasha0421"
                         echo "Before Deployment Update ..."
                         cat python-jenkins-argocd-k8s/deploy/deploy.yaml
                         sed -i '' "s/32/${BUILD_NUMBER}/g" python-jenkins-argocd-k8s/deploy/deploy.yaml
