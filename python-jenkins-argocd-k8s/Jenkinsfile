@@ -110,6 +110,7 @@ pipeline {
                     sh '''
                         rm -rf .git
                         git init
+                        
                         git config --global user.email "himasha0421@gmail.com"
                         git config --global user.name "himasha0421"
                         echo "Before Deployment Update ..."
