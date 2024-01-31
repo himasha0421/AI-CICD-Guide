@@ -19,3 +19,5 @@ spec:
           image: 630210676530.dkr.ecr.us-east-1.amazonaws.com/ai-cicd:v23
           ports:
             - containerPort: 8000
+          imagePullSecrets:
+            - name: regcred

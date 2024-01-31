@@ -196,3 +196,14 @@ echo MDZGeENSOUx3OGpPWlFiVXExc0hTUEVuQll5SWFldmc= | base64 -d
 
 original_pw: 06FxCR9Lw8jOZQbUq1sHSPEnBYyIaevg
 ```
+
+step 10. create aws exr secret inside kubernets cluster
+
+```bash
+
+kubectl create secret docker-registry regcred \
+  --docker-server=630210676530.dkr.ecr.us-east-1.amazonaws.com \
+  --docker-username=AWS \
+  --docker-password=$(aws ecr get-login-password) \
+  --namespace=default
+```

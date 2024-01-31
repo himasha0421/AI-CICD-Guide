@@ -4,7 +4,9 @@ metadata:
   name: todo-app
 spec:
   containers:
-  - name: todo-app
-    image: abhishekf5/todoapp:v1
-    ports:
-    - containerPort: 8000
+    - name: todo-app
+      image: 630210676530.dkr.ecr.us-east-1.amazonaws.com/ai-cicd:v6
+      ports:
+        - containerPort: 8000
+      imagePullSecrets:
+        - name: regcred
