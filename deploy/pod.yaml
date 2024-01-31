@@ -5,7 +5,7 @@ metadata:
 spec:
   containers:
     - name: todo-app
-      image: 630210676530.dkr.ecr.us-east-1.amazonaws.com/ai-cicd:v43
+      image: public.ecr.aws/m3j8h2a6/django-bot:v0
       imagePullPolicy: Always
       ports:
         - containerPort: 8000
