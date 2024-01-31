@@ -230,15 +230,17 @@ todo-app-5bc5577fbb-lhd4g                     1/1     Running   0          71s
 kubectl get svc
 
 NAME                            TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)                      AGE
-example-argocd-metrics          ClusterIP      10.108.67.47    <none>        8082/TCP                     6m54s
-example-argocd-redis            ClusterIP      10.106.228.22   <none>        6379/TCP                     6m54s
-example-argocd-repo-server      ClusterIP      10.98.196.80    <none>        8081/TCP,8084/TCP            6m54s
-example-argocd-server           LoadBalancer   10.103.141.5    <pending>     80:30416/TCP,443:32036/TCP   6m54s
-example-argocd-server-metrics   ClusterIP      10.105.43.62    <none>        8083/TCP                     6m54s
-kubernetes                      ClusterIP      10.96.0.1       <none>        443/TCP                      31m
-todo-service                    NodePort       10.110.100.91   <none>        80:31000/TCP                 81s
+example-argocd-metrics          ClusterIP      10.108.67.47    <none>        8082/TCP                     21m
+example-argocd-redis            ClusterIP      10.106.228.22   <none>        6379/TCP                     21m
+example-argocd-repo-server      ClusterIP      10.98.196.80    <none>        8081/TCP,8084/TCP            21m
+example-argocd-server           LoadBalancer   10.103.141.5    <pending>     80:30416/TCP,443:32036/TCP   21m
+example-argocd-server-metrics   ClusterIP      10.105.43.62    <none>        8083/TCP                     21m
+kubernetes                      ClusterIP      10.96.0.1       <none>        443/TCP                      45m
+todo-service                    NodePort       10.110.100.91   <none>        8080:31000/TCP               15m
 ```
 
 step 12. expose custom python application to outside world
 
-kubectl port-forward --address 0.0.0.0 service/example-argocd-server 32617:8080
+```bash
+kubectl port-forward --address 0.0.0.0 service/todo-service 31000:8080
+```
