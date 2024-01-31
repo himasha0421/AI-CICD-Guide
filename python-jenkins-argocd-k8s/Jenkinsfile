@@ -131,8 +131,8 @@ pipeline {
                         echo "Before Deployment Update ..."
                         cat deploy/deploy.yaml
 
-                        sed -i "s/ai-cicd:v.*/ai-cicd:v${BUILD_NUMBER}/g" deploy/deploy.yaml
-                        sed -i "s/ai-cicd:v.*/ai-cicd:v${BUILD_NUMBER}/g" deploy/pod.yaml
+                        sed -i "s/django-bot:v.*/django-bot:v${BUILD_NUMBER}/g" deploy/deploy.yaml
+                        sed -i "s/django-bot:v.*/django-bot:v${BUILD_NUMBER}/g" deploy/pod.yaml
                         
                         echo "After Deployment Update ..."
                         cat deploy/deploy.yaml
