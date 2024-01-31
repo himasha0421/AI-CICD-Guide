@@ -72,7 +72,7 @@ pipeline {
                 script{
                     sh '''
                         wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
-                        unzip sonar-scanner-cli-5.0.1.3006-linux.zip
+                        unzip -o sonar-scanner-cli-5.0.1.3006-linux.zip
                     '''
                 }
             }
@@ -91,7 +91,7 @@ pipeline {
                         -Dsonar.sources=. \
                         -Dsonar.host.url=${SONAR_URL} \
                         -Dsonar.login=$SONAR_AUTH_TOKEN
-                        
+
                     '''
                 }
             }
