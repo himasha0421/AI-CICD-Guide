@@ -85,7 +85,7 @@ pipeline {
             steps{
                 withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]){
                     sh '''
-                        export PATH=$PATH:/home/ubuntu/AI-CICD/sonar-scanner-5.0.1.3006-linux/bin/
+                        cd sonar-scanner-5.0.1.3006-linux/bin/
                         sonar-scanner \
                         -Dsonar.projectKey=jenkins-cicd \
                         -Dsonar.sources=. \
