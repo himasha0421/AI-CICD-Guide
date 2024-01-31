@@ -63,7 +63,7 @@ pipeline {
                         ls -a
                         cd python-jenkins-argocd-k8s
 
-                        docker build -t public.ecr.aws/m3j8h2a6/django-bot:v${BUILD_NUMBER}
+                        docker build -t public.ecr.aws/m3j8h2a6/django-bot:v${BUILD_NUMBER} .
                         docker push public.ecr.aws/m3j8h2a6/django-bot:v${BUILD_NUMBER}
 
                         echo 'Docker Build Complete ...'
